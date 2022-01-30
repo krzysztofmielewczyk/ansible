@@ -1,0 +1,15 @@
+version: '3'
+services:
+  ansible-exec:
+    image: docker.io/library/ansible-exec
+    volumes:
+      - ./:/opt/ansible/inventory/
+      - $HOME/.azure/credentials:/root/.azure/credentials
+      - $HOME/.ssh:/root/.ssh/
+      - $HOME/.ssh:/home/tgk/.ssh/
+    environment:
+      - AZURE_CLIENT_ID
+      - AZURE_SECRET=
+      - AZURE_SUBSCRIPTION_ID=
+      - AZURE_TENANT=
+    command: bash -c "cd /opt/ansible/inventory && ansible-playbook tworzenie_srodowiska.yaml -i ."

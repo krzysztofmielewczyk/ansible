@@ -1,0 +1,23 @@
+---
+- name: Utworzenie katalogu
+  become: true
+  file:
+    path: /work_directory/nginx
+    state: directory
+    owner: "{{ admin_username }}"
+    mode: '0755'
+
+- name: Kopiowanie plików
+  become: true
+  copy:
+    src: .
+    dest: /work_directory/nginx/
+    owner: "{{ admin_username }}"
+    mode: "0755"
+
+- name: Uruchomienie serwera
+  become: true
+  command: 'docker-compose up -d'
+  args:
+    chdir: '/work_directory/nginx/'
+...

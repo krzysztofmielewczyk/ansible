@@ -1,0 +1,32 @@
+---
+- name: config ansible
+  hosts: 
+    - azure_vm
+  connection: local
+  roles:
+    -  tworzenie_maszyny_wirtualnej
+    -  dodawanie_hostow
+
+- name: install common tools for ubuntu servers
+  hosts:
+    - wirutalne_maszyny
+  roles:
+    - podstawowe_programy
+    - monitoring
+
+- name: Konfiguracja serwera 2
+  hosts:
+    - serwer2
+  roles:
+    - prometheus
+    - nginx
+    - grafana
+
+- name: Konfiguracja serwera 1
+  hosts:
+    - serwer1
+  roles:
+    - ftp_server
+    - elasticsearch
+    - postgresql
+...    

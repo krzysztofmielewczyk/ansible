@@ -1,0 +1,17 @@
+---
+version: '3'
+services:
+  prometheus:
+    image: prom/prometheus:v2.35.0
+    container_name: prometheus
+    volumes:
+      - ./config:/etc/prometheus:ro
+      - ./prometheusdata:/data/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yaml'
+      - '--storage.tsdb.path=/data/prometheus'
+    ports:
+      - "9090:9090"
+    user: '1001'
+    restart: always
+...

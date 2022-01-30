@@ -1,0 +1,6 @@
+---
+resource_group: konfiguracja_ansible
+location: northeurope
+host_group: wirutalne_maszyny
+admin_username: tgk
+...

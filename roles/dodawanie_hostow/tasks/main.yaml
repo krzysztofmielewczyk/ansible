@@ -1,0 +1,22 @@
+---
+- name: Pobierz publiczne adresy IP z grupy zasobów
+  azure_rm_publicipaddress_info:
+    resource_group: "{{ resource_group }}"
+  register: adresy_ip
+
+- name: Dodaj hosty - serwer1
+  add_host:
+    name: '{{ item.name }}'
+    ansible_ssh_host: "{{ item.ip_address }}"
+    groups: "{{ host_group }}"
+  when: '"serwer1" in item.name'
+  loop: "{{ adresy_ip.publicipaddresses }}"
+
+- name: Dodaj hosty - serwer2
+  add_host:
+    name: '{{ item.name }}'
+    ansible_ssh_host: "{{ item.ip_address }}"
+    groups: "{{ host_group }}"
+  when: '"serwer2" in item.name'
+  loop: "{{ adresy_ip.publicipaddresses }}"
+...

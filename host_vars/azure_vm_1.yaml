@@ -1,0 +1,43 @@
+---
+vm_name: serwer1
+vm_machine: Standard_D2s_v3
+admin_username: tgk
+public_ip_allocation_method: Static
+vn_address_prefix: "10.0.0.0/16"
+subnet_address_prefix: "10.0.1.0/24"
+os_distro: UbuntuServer
+os_publisher: Canonical
+os_sku: '18.04-LTS'
+os_version: latest
+open_ports:
+  - name: SSH
+    protocol: Tcp
+    destination_port_range: 22
+    access: Allow
+    priority: 1002
+    direction: Inbound
+  - name: postgreSQL
+    protocol: "*"
+    destination_port_range: 5432
+    access: Allow
+    priority: 1003
+    direction: Inbound
+  - name: node-exporter
+    protocol: "*"
+    destination_port_range: 9100
+    access: Allow
+    priority: 1009
+    direction: Inbound
+  - name: elasticserach9200
+    protocol: Udp
+    destination_port_range: 9200
+    access: Allow
+    priority: 1004
+    direction: Inbound
+  - name: elasticserach9300
+    protocol: Tcp
+    destination_port_range: 9300
+    access: Allow
+    priority: 1005
+    direction: Inbound
+...

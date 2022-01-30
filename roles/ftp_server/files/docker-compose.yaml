@@ -1,0 +1,12 @@
+version: '3'
+services:
+  sftp:
+    image: atmoz/sftp
+    ports:
+      - "21:22"
+    volumes:
+      - ./data:/home/username/data
+    environment:
+      - SFTP_USERS=username:password:1001
+      - SFTP_AUTH=password
+    restart: always

@@ -1,0 +1,9 @@
+---
+- name: config ansible
+  hosts:
+    - azure_vm
+  connection: local
+  gather_facts: false
+  roles:
+    -  usuwanie_grupy_zasobów
+...

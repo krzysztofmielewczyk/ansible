@@ -1,0 +1,35 @@
+---
+- name: Tworzenie katalogów
+  become: true
+  file:
+    path: "{{ item.path }}"
+    state: directory
+    owner: "{{ admin_username }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - { path: "/work_directory/prometheus", mode: "755" }
+    - { path: "/work_directory/prometheus/config", mode: "755" }
+    - { path: "/work_directory/prometheus/prometheusdata", mode: "777" }
+
+- name: Kopiowanie plików
+  become: true
+  copy:
+    src: .
+    dest: /work_directory/prometheus/
+    owner: "{{ admin_username }}"
+    mode: "0755"
+
+- name: Przenoszenie szablonów na serwer
+  become: true
+  template:
+    src: prometheus.yaml.j2
+    dest: /work_directory/prometheus/config/prometheus.yaml
+    owner: "{{ admin_username }}"
+    mode: "0755"
+
+- name: Uruchomienie prometheus
+  become: true
+  command: 'docker-compose up -d'
+  args:
+    chdir: '/work_directory/prometheus/'
+...

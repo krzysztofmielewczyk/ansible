@@ -1,0 +1,32 @@
+---
+- name: Aktualizacja repozytoriów
+  become: yes
+  apt:
+    update_cache: yes
+
+- name: Instalacja podstawowych pakietów - używając apt
+  become: yes
+  apt:
+    name: ['python3-pip', 'python3-docker', 'net-tools', 'jq', 'git', 'docker', 'docker-compose', 'vim', 'htop']
+    state: latest
+
+- name: Aktualizacja wszystkich zależności Python
+  pip:
+    name: pip
+    executable: pip3
+    state: latest
+
+- name: Instalacja zależności Python
+  pip:
+    name: 'docker'
+    executable: pip3
+    state: latest
+
+- name: Utworzenie katalogu do instalacji usług
+  become: true
+  file:
+    path: /work_directory
+    state: directory
+    owner: "{{ admin_username }}"
+    mode: '0755'
+...

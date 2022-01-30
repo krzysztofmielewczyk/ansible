@@ -1,0 +1,25 @@
+---
+- name: Utworzenie katalogu
+  become: true
+  file:
+    path: "{{ item.path }}"
+    state: directory
+    owner: "{{ admin_username }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - { path: "/work_directory/grafana", mode: "755" }
+
+- name: Kopiowanie plików
+  become: true
+  copy:
+    src: .
+    dest: /work_directory/grafana/
+    owner: "{{ admin_username }}"
+    mode: "0755"
+
+- name: Uruchomienie Grafany
+  become: true
+  command: 'docker-compose up -d'
+  args:
+    chdir: '/work_directory/grafana/'
+...

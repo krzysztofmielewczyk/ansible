@@ -1,0 +1,23 @@
+---
+- name: Create work directory
+  become: true
+  file:
+    path: /work_directory/postgres
+    state: directory
+    owner: "{{ admin_username }}"
+    mode: '0755'
+
+- name: Copy files
+  become: true
+  copy:
+    src: .
+    dest: /work_directory/postgres/
+    owner: "{{ admin_username }}"
+    mode: "0755"
+
+- name: Run postgreSQL server
+  become: true
+  command: 'docker-compose up -d'
+  args:
+    chdir: '/work_directory/postgres/'
+...

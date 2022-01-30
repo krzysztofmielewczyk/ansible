@@ -1,0 +1,23 @@
+---
+- name: Utworzenie katalogów
+  become: true
+  file:
+    path: /work_directory/elasticsearch
+    state: directory
+    owner: "{{ admin_username }}"
+    mode: '0755'
+
+- name: Kopiowanie pliku docker-compose
+  become: true
+  copy:
+    src: .
+    dest: /work_directory/elasticsearch/
+    owner: "{{ admin_username }}"
+    mode: "0755"
+
+- name: Uruchomienie serwera
+  become: true
+  command: 'docker-compose up -d '
+  args:
+    chdir: '/work_directory/elasticsearch/'
+...

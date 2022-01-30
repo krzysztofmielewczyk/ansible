@@ -1,0 +1,7 @@
+---
+azure_vm:
+  hosts:
+    azure_vm_1:
+    azure_vm_2:
+...
+
